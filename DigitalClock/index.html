@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style> 
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap'); 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .alarm-clock {
+        margin: auto;
+        width: 80%;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
+        color: green; /* Make the text red */
+        background-color: black; /* Make the background black */
+        text-align: center; /* Center the text */
+        padding: 20px; 
+        border: 3px solid green; /* Add a red border */
+        border-radius: 16px; 
+    }
+    #timezone {
+        margin: 20px auto;
+        display: block;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
+        color: green; /* Make the text red */
+        background-color: black; /* Make the background black */
+        padding: 10px; 
+        border: 3px solid green; /* Add a red border */
+        border-radius: 16px; 
+    }
+
+    #clockHeading {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 24px;
+        color: green; /* Make the text red */
+        background-color: black; /* Make the background black */
+        text-align: center; /* Center the text */
+        padding: 20px; 
+        border: 3px solid green; /* Add a red border */
+        border-radius: 16px; 
+        margin-bottom: 20px;
+    }
+
+    </style>
+</head>
+<body>
+    <div id = "clockHeading">Canadian Time Zone Clock</div>
+    <div id = "clock" class = "alarm-clock"></div>
+    <select id="timezone">
+        <option value="America/St_Johns">Newfoundland Time Zone</option>
+        <option value="America/Goose_Bay">Atlantic Time Zone</option>
+        <option value="America/Toronto">Eastern Time Zone</option>
+        <option value="America/Winnipeg">Central Time Zone</option>
+        <option value="America/Edmonton">Mountain Time Zone</option>
+        <option value="America/Vancouver">Pacific Time Zone (Pacific Standard Time)</option>
+        <option value="America/Whitehorse">Pacific Time Zone (Pacific Daylight Time)</option>
+    </select>
+    <script>
+    var timeoutId; // declare a variable to hold the timeout ID
+
+    function showTime(timezone){
+        var date = new Date(); // get current date and time
+
+        // format the time in the specified timezone
+        var time = date.toLocaleTimeString('en-US', { timeZone: timezone, hour12: true });
+
+        document.getElementById("clock").innerHTML = time;
+
+        // clear the previous timeout
+        clearTimeout(timeoutId);
+
+        // call showTime function every 1000 milliseconds (or 1 second)
+        timeoutId = setTimeout(function() { showTime(timezone); }, 1000);
+    }
+
+    // call showTime function when page loads
+    window.onload = function() { 
+        showTime(document.getElementById('timezone').value); 
+    };
+
+    // update the clock when the selected timezone changes
+    document.getElementById('timezone').onchange = function() {
+        showTime(this.value);
+    };
+    
+    </script>
+</body>
+</html>
